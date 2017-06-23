@@ -1,0 +1,43 @@
+<h1 style="font-size: 100px"><%= @car.modelo %></h1>
+<% if flash[:notice] %>
+  <div style="background: yellow">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<ul>
+  <li>
+    ID:
+    <strong><%= @car.id %></strong>
+  </li>
+	<li>
+		Modelo:
+		<strong><%= @car.modelo %></strong>
+	</li>
+	<li>
+		Descripcion:
+		<strong><%= @car.description %></strong>
+	</li>
+  <li>
+    Precio por dia:
+    <strong>Lps. <%= @car.price_per_day %></strong>
+  </li>
+  <li>
+    Categoria:
+    <strong><%= @car.category %></strong>
+  </li>
+  <li>
+    Total Rentas:
+    <strong><%= total_rentas(@car.rents) %></strong>
+  </li>
+</ul>
+
+<%= render partial: "car_rents", locals: {rents: @car.rents} %>
+
+
+<% if current_owner == Owner.find_by(id: @car.owner_id) %>
+  <p> <%= link_to "Edit", edit_car_path(@car.id)%> </p>
+<% end %>
+<p> <%= link_to "New Rent", new_car_rent_path(@car.id)%> </p>
+<% unless @car.rents.any? %>
+  <p> <%= link_to "Borrar", car_path(@car.id), method: :delete%> </p>
+<% end %>

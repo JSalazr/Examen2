@@ -1,0 +1,32 @@
+<h1>List of Cars</h1>
+
+<% if flash[:notice] %>
+	<div>
+		<%= flash[:notice] %>
+	</div>
+<% end %>
+
+<table border ="1" class="table table-striped" style="width: 750px; text-align: center">
+	<thead>
+		<tr>
+			<th style="text-align: center">Owner</th>
+			<th style="text-align: center">Titulo</th>
+			<th style="text-align: center">Categoria</th>
+			<th style="text-align: center">Precio</th>
+			<th style="text-align: center">Cantidad de rentas hechas</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%- @cars.each do |cr| %>
+			<tr>
+				<td><%= Owner.find_by(id: cr.owner_id).name %></td>
+				<td><%= link_to cr.modelo, car_path(cr) %></td>
+				<td><%= cr.category %></td>
+				<td> Lps. <%= cr.price_per_day %> por dia.</td>
+				<td>Count</td>
+			</tr>
+		<%- end %>
+	</tbody>
+</table>
+
+<p> <%= link_to "New Car", new_car_path%> </p>
